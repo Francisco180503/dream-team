@@ -55,7 +55,7 @@ class DenunciasController extends Controller
     public function lista()
     {
         $denuncias = Denuncia::with('auditorRecepcion')->get();
-        return view("denuncias.lista", compact('denuncias'));
+        return view("denuncias.index", compact('denuncias'));
     }
 
     // Método para cargar los datos de una denuncia para modificar
