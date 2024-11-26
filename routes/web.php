@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuditorController;
+use App\Http\Controllers\AdminController;
+
+use App\Http\Controllers\DenuncianteController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +37,6 @@ Route::get('/home', function () {
     return view('home');
 })->middleware(['auth', 'verified'])->name('home');
 
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('/auditor', [AuditorController::class, 'index'])->name('auditor.index');
+Route::get('/denunciante', [DenuncianteController::class, 'index'])->name('denunciante.index');
