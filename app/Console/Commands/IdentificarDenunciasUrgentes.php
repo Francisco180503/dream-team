@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Denuncia; 
+use App\Models\Auditor;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\DenunciaUrgenteNotificacion;
 
@@ -54,8 +55,17 @@ class IdentificarDenunciasUrgentes extends Command
 
    private function enviarAlerta($denuncia)
    {
-       Notification::route('mail', 'your_gmail_address@gmail.com')
+       // Notificar al correo del equipo
+       Notification::route('mail', '2020230001@udh.edu.pe')
            ->notify(new DenunciaUrgenteNotificacion($denuncia));
+   
+       // Notificar al auditor responsable
+       if ($denuncia->auditor_recepcion_id) {
+           $auditor = \App\Models\Auditor::find($denuncia->auditor_recepcion_id);
+           if ($auditor) {
+               Notification::route('mail', $auditor->email)
+                   ->notify(new DenunciaUrgenteNotificacion($denuncia));
+           }
+       }
    }
-
 }
