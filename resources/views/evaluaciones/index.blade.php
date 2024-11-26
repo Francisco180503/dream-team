@@ -27,14 +27,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($evaluaciones as $evaluacion)
+            @forelse ($evaluaciones as $evaluacion)
             <tr>
                 <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
                 <td class="border border-gray-300 px-4 py-2">{{ $evaluacion->denuncia->entidad_sujeta_control }}</td>
                 <td class="border border-gray-300 px-4 py-2">{{ $evaluacion->auditorEvaluacion->nombre }}</td>
                 <td class="border border-gray-300 px-4 py-2">{{ $evaluacion->fecha_evaluacion_inicio }}</td>
-                <td class="border border-gray-300 px-4 py-2">{{ $evaluacion->fecha_evaluacion_fin }}</td>
-                <td class="border border-gray-300 px-4 py-2">{{ $evaluacion->resultado_evaluacion }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ $evaluacion->fecha_evaluacion_fin ?? 'N/A' }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ $evaluacion->resultado_evaluacion ?? 'Pendiente' }}</td>
                 <td class="border border-gray-300 px-4 py-2">
                     <button
                         class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
@@ -44,7 +44,11 @@
                     </button>
                 </td>
             </tr>
-            @endforeach
+            @empty
+            <tr>
+                <td colspan="7" class="text-center border border-gray-300 px-4 py-2">No hay evaluaciones registradas.</td>
+            </tr>
+            @endforelse
         </tbody>
     </table>
 </div>
@@ -59,17 +63,21 @@
             <div class="mb-4">
                 <label class="block text-gray-700">Denuncia:</label>
                 <select name="denuncia_id" class="w-full border rounded px-4 py-2" required>
-                    @foreach ($denuncias as $denuncia)
+                    @forelse ($denuncias as $denuncia)
                     <option value="{{ $denuncia->id }}">{{ $denuncia->entidad_sujeta_control }}</option>
-                    @endforeach
+                    @empty
+                    <option value="" disabled>No hay denuncias admitidas disponibles</option>
+                    @endforelse
                 </select>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700">Auditor:</label>
                 <select name="auditor_evaluacion_id" class="w-full border rounded px-4 py-2" required>
-                    @foreach ($auditores as $auditor)
+                    @forelse ($auditores as $auditor)
                     <option value="{{ $auditor->id }}">{{ $auditor->nombre }}</option>
-                    @endforeach
+                    @empty
+                    <option value="" disabled>No hay auditores disponibles</option>
+                    @endforelse
                 </select>
             </div>
             <div class="mb-4">
