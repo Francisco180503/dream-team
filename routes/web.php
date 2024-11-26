@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DenunciaController;
+use App\Http\Controllers\AuditorController;
+use App\Http\Controllers\EvaluacionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +34,4 @@ Route::middleware([
 Route::get('/home', function () {
     return view('home');
 })->middleware(['auth', 'verified'])->name('home');
+
