@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Evaluacion extends Model
 {
     use HasFactory;
-
+    protected $table = 'evaluaciones';
+    public $timestamps = false;
     protected $fillable = [
         'denuncia_id',
         'fecha_evaluacion_inicio',
-        'fecha_evaluacion_fin',
+        'fecha_evaluacion_fin',     
         'resultado_evaluacion',
         'auditor_evaluacion_id',
     ];

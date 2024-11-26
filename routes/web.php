@@ -6,6 +6,9 @@ use App\Http\Controllers\AuditorController;
 use App\Http\Controllers\EvaluacionController;
 
 
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,14 +40,17 @@ Route::get('/home', function () {
 
 
 // Rutas para denuncias
-Route::get("/Denuncias/Registro", [DenunciasController::class, "registro"]);
-Route::post("/Denuncias/Guardar", [DenunciasController::class, "guardar"]);
-Route::get("/Denuncias/lista", [DenunciasController::class, "lista"]);
-Route::get("/Denuncias/modificar/{id}", [DenunciasController::class, "modificar"]);
-Route::post("/Denuncias/Actualizar", [DenunciasController::class, "actualizar"]);
-Route::delete("/Denuncias/eliminar/{id}", [DenunciasController::class, "eliminar"]);
+
+
+Route::get('/Denuncias/lista', [DenunciaController::class, 'lista']);
+Route::get('/Denuncias/Registro', [DenunciaController::class, 'registro']);
+Route::post('/Denuncias/Guardar', [DenunciaController::class, 'guardar']);
+Route::get('/Denuncias/modificar/{id}', [DenunciaController::class, 'modificar']);
+Route::post('/Denuncias/Actualizar', [DenunciaController::class, 'actualizar']);
+Route::delete('/Denuncias/eliminar/{id}', [DenunciaController::class, 'eliminar']);
 
 // Rutas para auditores
+
 
 Route::get('/Auditores/Registro', [AuditorController::class, 'registro']);
 Route::post('/Auditores/Guardar', [AuditorController::class, 'guardar']);
@@ -53,13 +59,13 @@ Route::get('/Auditores/modificar/{id}', [AuditorController::class, 'modificar'])
 Route::post('/Auditores/Actualizar', [AuditorController::class, 'actualizar']);
 Route::delete('/Auditores/eliminar/{id}', [AuditorController::class, 'eliminar']);
 
-
 // Rutas para evaluaciones
 
 
+Route::get('/Evaluaciones/lista', [EvaluacionController::class, 'lista']);
 Route::get('/Evaluaciones/Registro', [EvaluacionController::class, 'registro']);
 Route::post('/Evaluaciones/Guardar', [EvaluacionController::class, 'guardar']);
-Route::get('/Evaluaciones/lista', [EvaluacionController::class, 'lista']);
 Route::get('/Evaluaciones/modificar/{id}', [EvaluacionController::class, 'modificar']);
 Route::post('/Evaluaciones/Actualizar', [EvaluacionController::class, 'actualizar']);
 Route::delete('/Evaluaciones/eliminar/{id}', [EvaluacionController::class, 'eliminar']);
+    
