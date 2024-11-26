@@ -24,7 +24,6 @@ class EvaluacionController extends Controller
     
         return view('evaluaciones.registro', compact('denuncias', 'auditores'));
     }
-    
 
     // Guardar una nueva evaluación
     public function guardar(Request $request)

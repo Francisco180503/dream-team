@@ -82,6 +82,34 @@ class DenunciaController extends Controller
         return redirect('/Denuncias/lista')->with('success', 'Denuncia actualizada exitosamente.');
     }
 
+        
+    public function evaluar($id)
+    {
+        $denuncia = Denuncia::findOrFail($id); // Encuentra la denuncia
+        $auditores = Auditor::all(); // Todos los auditores disponibles
+        return view('denuncias.evaluar', compact('denuncia', 'auditores'));
+    }
+
+    public function guardarEvaluacion(Request $request, $id)
+    {
+    $request->validate([
+        'fecha_evaluacion_inicio' => 'required|date',
+        'fecha_evaluacion_fin' => 'nullable|date|after_or_equal:fecha_evaluacion_inicio',
+        'resultado_evaluacion' => 'required|in:Desestimado,Pasa a Auditoría',
+        'auditor_evaluacion_id' => 'required|exists:auditores,id',
+    ]);
+
+    $evaluacion = new \App\Models\Evaluacion();
+    $evaluacion->denuncia_id = $id; // Relaciona la evaluación con la denuncia
+    $evaluacion->fecha_evaluacion_inicio = $request->input('fecha_evaluacion_inicio');
+    $evaluacion->fecha_evaluacion_fin = $request->input('fecha_evaluacion_fin');
+    $evaluacion->resultado_evaluacion = $request->input('resultado_evaluacion');
+    $evaluacion->auditor_evaluacion_id = $request->input('auditor_evaluacion_id');
+    $evaluacion->save();
+
+    return redirect('/Denuncias/lista')->with('success', 'Evaluación guardada exitosamente.');
+}
+
     // Eliminar una denuncia
     public function eliminar($id)
     {

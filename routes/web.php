@@ -68,4 +68,8 @@ Route::post('/Evaluaciones/Guardar', [EvaluacionController::class, 'guardar']);
 Route::get('/Evaluaciones/modificar/{id}', [EvaluacionController::class, 'modificar']);
 Route::post('/Evaluaciones/Actualizar', [EvaluacionController::class, 'actualizar']);
 Route::delete('/Evaluaciones/eliminar/{id}', [EvaluacionController::class, 'eliminar']);
+
+Route::get('/Denuncias/{id}/Evaluar', [DenunciaController::class, 'evaluar'])->name('denuncias.evaluar');
+Route::post('/Denuncias/{id}/Evaluar', [DenunciaController::class, 'guardarEvaluacion']);
+
     
