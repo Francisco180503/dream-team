@@ -33,14 +33,14 @@ class DenunciaUrgenteNotificacion extends Notification
      * Get the mail representation of the notification.
      */
     public function toMail($notifiable)
-   {
-       return (new MailMessage)
-                   ->subject('Alerta: Denuncia Urgente Detectada')
-                   ->line('Se ha identificado una denuncia urgente:')
-                   ->line('Titulo: ' . $this->denuncia->titulo)
-                   ->action('Ver Denuncia', url('/denuncias/' . $this->denuncia->id))
-                   ->line('Por favor, actúa lo antes posible.');
-   }
+    {
+        return (new MailMessage)
+                    ->subject('Alerta: Denuncia Urgente Detectada')
+                    ->line('Se ha identificado una denuncia urgente:')
+                    ->line('Descripción: ' . $this->denuncia->descripcion)
+                    ->action('Ver Denuncia', url('/denuncias/' . $this->denuncia->id))
+                    ->line('Por favor, actúa lo antes posible.');
+    }
 
     /**
      * Get the array representation of the notification.

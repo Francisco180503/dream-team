@@ -30,28 +30,32 @@ class IdentificarDenunciasUrgentes extends Command
      * Execute the console command.
      */
     public function handle()
-    {
-        $denuncias = Denuncia::where('urgente', false)
-            ->where(function ($query) {
-                $query->where('impacto', '>=', 4)
-                  ->orWhere('created_at', '<', now()->subDays(7));
-            })
-            ->get();
+   {
+       $denuncias = Denuncia::where('estado_recepcion', 'Pendiente')
+           ->where(function ($query) {
+               $query->where('fecha_recepcion', '<', now()->subDays(7))
+                   ->orWhere('descripcion', 'like', '%corrupción%')
+                   ->orWhere('descripcion', 'like', '%fraude%')
+                   ->orWhere('descripcion', 'like', '%soborno%')
+                   ->orWhere('descripcion', 'like', '%malversación%')
+                   ->orWhere('descripcion', 'like', '%abuso de poder%')
+                   ->orWhere('funcionarios_involucrados', 'like', '%alto rango%')
+                   ->orWhere('entidad_sujeta_control', 'like', '%sector crítico%');
+           })
+           ->get();
 
-        foreach ($denuncias as $denuncia) {
-            $denuncia->urgente = true;
-            $denuncia->save();
+       foreach ($denuncias as $denuncia) {
+           // Enviar alerta al equipo
+           $this->enviarAlerta($denuncia);
+       }
 
-            $this->enviarAlerta($denuncia);
-        }
+       $this->info('Denuncias urgentes identificadas y alertas enviadas.');
+   }
 
-        $this->info('Denuncias urgentes identificadas y alertas enviadas.');
-    }
-
-    private function enviarAlerta($denuncia)
-    {
-        Notification::route('mail', '2020230001@udh.edu.pe')
-            ->notify(new DenunciaUrgenteNotificacion($denuncia));
-    }
+   private function enviarAlerta($denuncia)
+   {
+       Notification::route('mail', 'your_gmail_address@gmail.com')
+           ->notify(new DenunciaUrgenteNotificacion($denuncia));
+   }
 
 }
